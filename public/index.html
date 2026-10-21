@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1624">
+  <title>Mersad | Collect Telegram Messages Easily</title>
+  <meta name="description" content="Collect and analyze Telegram channel messages step by step. Preview results and download CSV files.">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar wrap">
+    <a class="brand" href="/" aria-label="Mersad, home"><span class="brand-mark">✳</span><span>Mersad<small>TELEGRAM RESEARCH STUDIO</small></span></a>
+    <div class="top-controls"><span class="top-status"><i></i> Your personal research space</span><button id="reset-app" class="secondary reset-app" type="button">Disconnect &amp; reset</button></div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-copy"><div class="eyebrow"><span class="spark">✦</span> From channels to data, step by step</div>
+        <h1>Telegram messages,<br><em>ready to explore.</em></h1>
+        <p>Connect your account, choose channels and dates, and follow collection as it happens. Preview organized results or download them as CSV.</p>
+        <div class="hero-pills"><span>◉ Secure QR sign-in</span><span>▤ Downloadable results</span><span>◷ Live progress</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="art-center">✈</div><div class="art-card art-card-one"><span class="art-avatar">EGX</span><span><b>Market channel</b><small>New messages...</small></span><i>↗</i></div><div class="art-card art-card-two"><span class="art-chart">▂▄▆▅█</span><span><b>Results are coming in</b><small>Organized data</small></span></div><div class="art-glow"></div></div>
+    </section>
+    <nav class="stepper" aria-label="Getting started"><button class="step active" data-step="1"><span>01</span><b>Create an app</b></button><span class="step-line"></span><button class="step" data-step="2"><span>02</span><b>Connect Telegram</b></button><span class="step-line"></span><button class="step" data-step="3"><span>03</span><b>Set up search</b></button><span class="step-line"></span><button class="step" data-step="4"><span>04</span><b>Results</b></button></nav>
+    <div class="workspace">
+      <section class="panel main-panel">
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+        <div class="screen" id="screen-1">
+          <div class="section-head"><div><span class="section-index">STEP 01 / 04</span><h2>Create a Telegram app</h2><p>These credentials let the app connect to your account after you approve sign-in on your phone.</p></div><div class="section-icon">▣</div></div>
+          <div class="guide"><div class="guide-item"><span class="guide-number">1</span><div><b>Open the Telegram portal</b><p>Go to <a href="https://my.telegram.org/" target="_blank" rel="noopener noreferrer">my.telegram.org ↗</a>, sign in with your phone number, and enter the code sent to you in Telegram.</p></div></div><div class="guide-item"><span class="guide-number">2</span><div><b>Choose API development tools</b><p>Create a new app. For <strong>App title</strong>, use a descriptive name such as <code>My Research Collector</code>. For <strong>Short name</strong>, use a short name without spaces, such as <code>myresearchcollector</code>.</p></div></div><div class="guide-item"><span class="guide-number">3</span><div><b>Select a platform and copy your credentials</b><p>Choose <strong>Desktop</strong> because the connection uses a Telegram client. After creating the app, copy its <strong>App api_id</strong> and <strong>App api_hash</strong> exactly as shown.</p></div></div></div>
+          <form id="keys-form" class="form-block"><div class="two-cols"><label>API ID <span class="hint">Numbers only</span><input id="api-id" inputmode="numeric" autocomplete="off" placeholder="Example: 12345678" required pattern="[0-9]+"></label><label>API Hash <span class="hint">32 letters or digits</span><input id="api-hash" type="password" autocomplete="off" placeholder="Paste your API Hash here" required minlength="32" maxlength="32"></label></div><p class="micro">Your credentials and session are encrypted by the server. Never share them or commit them to a public repository.</p><button class="primary" type="submit"><span>Next: Connect your account</span><span>→</span></button></form>
+        </div>
+        <div class="screen" id="screen-2" hidden>
+          <div class="section-head"><div><span class="section-index">STEP 02 / 04</span><h2>Connect with a QR code</h2><p>Use Telegram on your phone to approve sign-in.</p></div><div class="section-icon">⌗</div></div>
+          <div id="qr-view" class="qr-layout"><div class="qr-frame"><div class="qr-visual"><img id="qr-image" alt="QR code for Telegram sign-in"></div><div id="qr-countdown" class="qr-countdown">Preparing your QR code...</div><button id="refresh-qr" class="secondary qr-refresh" type="button">Refresh QR code</button></div><div class="scan-steps"><div><span>01</span><p>Open <b>Telegram</b> on your phone.</p></div><div><span>02</span><p>Go to <b>Settings → Devices → Link Desktop Device</b>.</p></div><div><span>03</span><p>Scan the QR code and approve the connection.</p></div><div class="scan-wait"><span class="pulse"></span><p id="scan-message">Waiting for you to scan and approve...</p></div></div></div>
+          <form id="password-form" class="password-card" hidden><div class="password-icon">⌁</div><h3>One more step</h3><p>Your account has a two-step verification password. Enter it to finish connecting. If you forgot it, open Telegram → Settings → Privacy and Security → Two-Step Verification and follow the recovery option available to your account.</p><label>Two-step verification password<input id="twofa-password" type="password" autocomplete="off" required placeholder="Password"></label><button type="submit" class="primary">Confirm connection →</button></form>
+          <div id="connected-card" class="connected-card" hidden><div class="success-ring">✓</div><h3>Connected successfully!</h3><p id="connected-name"></p><button id="to-config" class="primary" type="button">Choose channels and search →</button></div>
+        </div>
+        <div class="screen" id="screen-3" hidden>
+          <div class="section-head"><div><span class="section-index">STEP 03 / 04</span><h2>Set up your search</h2><p>Choose your sources, dates, and the results you want to collect.</p></div><div class="section-icon">◫</div></div>
+          <form id="config-form"><label>Channels or groups <span class="hint">One per line</span><textarea id="sources" rows="6" required placeholder="@egx_public&#10;https://t.me/another_channel"></textarea></label><p class="micro">Use a channel @username or a t.me link. Your account must have access to each source.</p>
+            <div class="two-cols date-fields"><label>From date<input id="start-date" type="date" value="2022-01-01" required></label><label>To date <span class="hint">Includes this day</span><input id="end-date" type="date" value="2025-12-31" required></label></div>
+          <div class="form-label">What should we collect?</div><div class="choice-grid"><label class="choice"><input type="radio" name="mode" value="egx" checked><span class="choice-icon">↗</span><span><b>Egyptian stock market analysis</b><small>Buy/sell recommendations and acquisition rumors, using the notebook's rules.</small></span></label><label class="choice"><input type="radio" name="mode" value="all"><span class="choice-icon">▤</span><span><b>All text messages</b><small>Search all text messages using the filters below.</small></span></label></div>
+            <div class="filter-box"><div class="form-label">Message filters <span class="hint">All optional</span></div><div class="two-cols"><label>Keywords or phrases<input id="keywords" dir="auto" placeholder="Example: earnings, dividends, acquisition"></label><label>Stocks or companies<input id="stocks" dir="auto" placeholder="Example: FWRY, Fawry, COMI"></label></div><label>Countries<input id="countries" dir="auto" placeholder="Example: Egypt, Saudi Arabia, UAE"></label><p class="micro">Separate values with commas. One value may match within each field; if you fill several fields, a message must match all of them. Known stocks and countries also match common Arabic and English names.</p></div>
+            <div class="two-cols"><label>Maximum results <span class="hint">Up to 5,000</span><input id="max-matches" type="number" min="1" max="5000" value="5000" required></label><label>Maximum messages to scan <span class="hint">Optional</span><input id="max-scanned" type="number" min="1" max="1000000" placeholder="No additional limit"></label></div><p class="micro">You may get fewer results if there are not enough matches. Stock market mode shows the notebook's categories; choose “All text messages” for a broader search.</p><button class="primary" type="submit">Start collecting messages <span>→</span></button></form>
+        </div>
+        <div class="screen" id="screen-4" hidden>
+          <div class="section-head"><div><span class="section-index">STEP 04 / 04</span><h2 id="results-title">Collecting messages now</h2><p id="results-subtitle">Follow live progress and results from each source.</p></div><div class="section-icon">◉</div></div>
+          <div class="stats"><div class="stat"><span>Unique results</span><strong id="matched-count">0</strong><small>Matching messages</small></div><div class="stat"><span>Scanned</span><strong id="scanned-count">0</strong><small>Messages</small></div><div class="stat"><span>Sources</span><strong id="sources-count">0 / 0</strong><small>Completed sources</small></div></div>
+          <div class="progress-card" id="progress-card" data-state="idle"><div class="progress-top"><div><span class="pulse"></span><b id="progress-label">Getting ready...</b></div><span id="progress-state">Ready to start</span></div><div class="progress-track" id="progress-track" role="progressbar" aria-label="Message collection status" aria-valuetext="Ready to start"><div class="progress-runner"></div></div><p>The indicator moves while collecting. The counters above show the messages scanned and results found.</p></div>
+          <div class="results-actions"><button id="pause-button" class="secondary" type="button">Pause</button><button id="cancel-button" class="secondary danger" type="button">Cancel collection</button><button id="new-search-button" class="secondary" type="button">Search for more messages →</button><button id="download-filtered" class="primary compact" type="button" disabled>↓ Download results CSV</button><button id="download-raw" class="secondary" type="button" disabled>↓ Download all collected messages</button></div>
+          <div class="list-head"><h3>Sources</h3><span id="source-summary">Checking sources...</span></div><div id="source-list" class="source-list"></div>
+          <div class="list-head"><h3>Latest results</h3><span id="result-summary">Results appear here as they arrive</span></div><div id="result-list" class="result-list"><div class="empty-state">⌁<p>Waiting for the first matching message...</p></div></div>
+        </div>
+      </section>
+      <aside class="side-panel"><div class="side-top"><span class="side-kicker">YOUR WORKSPACE</span><div class="side-orb">✦</div><h3>From many messages<br>to a clearer picture.</h3><p>A short path from creating Telegram credentials to a CSV ready for analysis.</p></div><div class="side-feature"><span>01</span><div><b>Choose your sources</b><small>Collect from channels that matter to you.</small></div></div><div class="side-feature"><span>02</span><div><b>Search precisely</b><small>Dates, keywords, and EGX post categories.</small></div></div><div class="side-feature"><span>03</span><div><b>Keep your results</b><small>Download CSV files you can open in Excel.</small></div></div><div class="side-note">✧ <span>The app reads only messages your account can access.</span></div></aside>
+    </div>
+  </main>
+  <footer class="wrap footer"><span>Mersad © 2026</span><span>Your data stays in your browser • Connected directly to Telegram</span></footer>
+</body>
+</html>
