@@ -15,7 +15,7 @@ function save(){if(resetting)return;sessionStorage.setItem(KEY,JSON.stringify({s
 function show(step){if(resetting)return;state.step=step;document.querySelectorAll('.screen').forEach(el=>el.hidden=el.id!==`screen-${step}`);document.querySelectorAll('.step').forEach(el=>{const n=Number(el.dataset.step);el.classList.toggle('active',n===step);el.classList.toggle('done',n<step);});$('notice').hidden=true;save();window.scrollTo({top:0,behavior:'smooth'});}
 function notice(message,type='error'){$('notice').textContent=message;$('notice').className=`notice ${type}`;$('notice').hidden=false;window.scrollTo({top:300,behavior:'smooth'});}
 async function api(path,payload,signal){
-  const response=await fetch(`/api/${path}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),cache:'no-store',signal});
+  const response=await fetch(`/service/${path}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),cache:'no-store',signal});
   let data;
   try{data=await response.json();}catch{
     if(response.status===404)throw Error('The API endpoint was not found (HTTP 404). Check the Vercel deployment and try again.');

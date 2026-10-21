@@ -39,7 +39,7 @@ test('expired QR response refreshes the code and detects a successful scan', asy
       qr_image: 'data:image/png;base64,AA==', expires_at: new Date(Date.now() + 30000).toISOString() } },
     { ok: true, data: { status: 'connected', token: 'authorized', name: 'Researcher' } }
   ]);
-  assert.deepEqual(calls, ['/api/poll', '/api/refresh-qr', '/api/poll']);
+  assert.deepEqual(calls, ['/service/poll', '/service/refresh-qr', '/service/poll']);
 });
 
 test('an already expired QR is refreshed before another poll', async () => {
@@ -48,7 +48,7 @@ test('an already expired QR is refreshed before another poll', async () => {
       qr_image: 'data:image/png;base64,AA==', expires_at: new Date(Date.now() + 30000).toISOString() } },
     { ok: true, data: { status: 'connected', token: 'authorized', name: 'Researcher' } }
   ]);
-  assert.deepEqual(calls, ['/api/refresh-qr', '/api/poll']);
+  assert.deepEqual(calls, ['/service/refresh-qr', '/service/poll']);
 });
 
 test('a pending scan keeps the current QR until Telegram confirms or it expires', async () => {
@@ -56,5 +56,5 @@ test('a pending scan keeps the current QR until Telegram confirms or it expires'
     { ok: true, data: { status: 'unchanged' } },
     { ok: true, data: { status: 'connected', token: 'authorized', name: 'Researcher' } }
   ]);
-  assert.deepEqual(calls, ['/api/poll', '/api/poll']);
+  assert.deepEqual(calls, ['/service/poll', '/service/poll']);
 });

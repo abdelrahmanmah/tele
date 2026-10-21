@@ -24,7 +24,7 @@ npm.cmd run dev
 
 1. اربط مستودع `abdelrahmanmah/tele` بمشروع Vercel واترك **Root Directory** على جذر المستودع. لا ترفع `.env` أو جلسات Telegram أو ملفات CSV شخصية.
 2. أضف متغير البيئة `SESSION_ENCRYPTION_KEY` بقيمة عشوائية من الأمر أعلاه. استخدم القيمة نفسها عبر عمليات النشر؛ تغييرها ينهي الجلسات المفتوحة.
-3. اختَر إعدادات Express/Node.js الافتراضية. `app.js` هو مدخل الخادم، و`public/` للواجهة الثابتة، و`vercel.json` يضبط مدة الوظيفة القصوى على 60 ثانية. بعد النشر جرّب `/api/health`؛ يجب أن يظهر `configured: true`.
+3. اختَر إعدادات Express/Node.js الافتراضية. `app.js` هو مدخل الخادم، و`public/` للواجهة الثابتة، و`vercel.json` يضبط مدة الوظيفة القصوى على 60 ثانية. بعد النشر جرّب `/service/health`؛ يجب أن يظهر `configured: true`.
 4. افتح الموقع عبر HTTPS. أدخل مفاتيح تطبيقك من [my.telegram.org](https://my.telegram.org/)، ثم امسح QR من Telegram على الهاتف: **الإعدادات ← الأجهزة ← ربط جهاز سطح المكتب**.
 
 ## كيف يعمل وحفظ البيانات

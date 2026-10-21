@@ -93,10 +93,10 @@ async function completeLogin(client, saved, result) {
 }
 function route(fn) { return (req, res, next) => Promise.resolve().then(() => fn(req.body || {}, req)).then(data => res.json(data)).catch(next); }
 
-app.get('/api/health', (req, res) => res.json({ ok: true,
+app.get('/service/health', (req, res) => res.json({ ok: true,
   configured: (() => { try { key(); return true; } catch { return false; } })() }));
 
-app.post('/api/start', route(async body => {
+app.post('/service/start', route(async body => {
   const rawId = String(body.api_id || '').trim();
   const hash = String(body.api_hash || '').trim();
   if (!/^\d+$/.test(rawId) || Number(rawId) < 1 || Number(rawId) > 2147483647 || !/^[a-f\d]{32}$/i.test(hash))
@@ -105,7 +105,7 @@ app.post('/api/start', route(async body => {
   return withClient(saved, async client => qrPayload(client, saved, await exportToken(client, saved)), true);
 }));
 
-app.post('/api/poll', route(async body => {
+app.post('/service/poll', route(async body => {
   const saved = unseal(body.token);
   try {
     return await withClient(saved, async client => {
@@ -145,7 +145,7 @@ app.post('/api/poll', route(async body => {
   }
 }));
 
-app.post('/api/refresh-qr', route(async body => {
+app.post('/service/refresh-qr', route(async body => {
   const saved = unseal(body.token);
   try {
     return await withClient(saved, async client =>
@@ -158,7 +158,7 @@ app.post('/api/refresh-qr', route(async body => {
   }
 }));
 
-app.post('/api/disconnect', route(async body => {
+app.post('/service/disconnect', route(async body => {
   const saved = unseal(body.token);
   return withClient(saved, async client => {
     try {
@@ -172,7 +172,7 @@ app.post('/api/disconnect', route(async body => {
   }, true);
 }));
 
-app.post('/api/password', route(async body => {
+app.post('/service/password', route(async body => {
   const saved = unseal(body.token);
   const password = body.password;
   if (typeof password !== 'string' || !password || password.length > 256)
@@ -191,7 +191,7 @@ app.post('/api/password', route(async body => {
   }, true);
 }));
 
-app.post('/api/source', route(async body => {
+app.post('/service/source', route(async body => {
   const saved = unseal(body.token);
   const source = String(body.source || '').trim();
   if (!source || source.length > 180) throw bad('Enter a valid channel name or t.me link.');
@@ -232,7 +232,7 @@ function filterTerms(value) {
   return Array.isArray(value) ? value.slice(0, 12).map(x => String(x).trim().slice(0, 80)).filter(Boolean) : [];
 }
 
-app.post('/api/page', route(async body => {
+app.post('/service/page', route(async body => {
   const saved = unseal(body.token);
   const peer = inputPeer(body.peer);
   const start = parseDate(body.start), end = parseDate(body.end);

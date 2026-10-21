@@ -36,13 +36,13 @@ async function resetScenario(disconnectFails) {
 test('disconnect and reset clears both browser stores before returning to step one', async () => {
   const { events, run } = await resetScenario(false);
   await run();
-  assert.deepEqual(events, ['/api/disconnect', 'clear:raw', 'clear:filtered',
+  assert.deepEqual(events, ['/service/disconnect', 'clear:raw', 'clear:filtered',
     'remove:mersad-session-v1', 'reload']);
 });
 
 test('local reset still works when Telegram disconnection cannot be confirmed', async () => {
   const { events, run } = await resetScenario(true);
   await run();
-  assert.deepEqual(events, ['/api/disconnect', 'clear:raw', 'clear:filtered',
+  assert.deepEqual(events, ['/service/disconnect', 'clear:raw', 'clear:filtered',
     'remove:mersad-session-v1', 'alert', 'reload']);
 });

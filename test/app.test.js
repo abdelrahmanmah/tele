@@ -29,17 +29,17 @@ test('page and API reject incomplete credentials without Telegram access', async
       const response = await fetch(base + path);
       assert.equal(response.status, 200, path);
     }
-    assert.deepEqual(await (await fetch(base + '/api/health')).json(), { ok: true, configured: true });
-    const badKeys = await fetch(base + '/api/start', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    assert.deepEqual(await (await fetch(base + '/service/health')).json(), { ok: true, configured: true });
+    const badKeys = await fetch(base + '/service/start', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ api_id: 'abc', api_hash: 'invalid' }) });
     assert.equal(badKeys.status, 400);
-    const badToken = await fetch(base + '/api/page', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    const badToken = await fetch(base + '/service/page', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: 'old-python-token' }) });
     assert.equal(badToken.status, 400);
-    const badRefresh = await fetch(base + '/api/refresh-qr', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    const badRefresh = await fetch(base + '/service/refresh-qr', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: 'old-python-token' }) });
     assert.equal(badRefresh.status, 400);
-    const badDisconnect = await fetch(base + '/api/disconnect', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    const badDisconnect = await fetch(base + '/service/disconnect', { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: 'old-python-token' }) });
     assert.equal(badDisconnect.status, 400);
   } finally {
