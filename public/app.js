@@ -17,7 +17,10 @@ function notice(message,type='error'){$('notice').textContent=message;$('notice'
 async function api(path,payload,signal){
   const response=await fetch(`/api/${path}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),cache:'no-store',signal});
   let data;
-  try{data=await response.json();}catch{throw Error('Could not read the server response. Please try again.');}
+  try{data=await response.json();}catch{
+    if(response.status===404)throw Error('The API endpoint was not found (HTTP 404). Check the Vercel deployment and try again.');
+    throw Error(`The server returned an unreadable response (HTTP ${response.status}). Check the deployment logs and try again.`);
+  }
   if(!response.ok){const err=Error(data.error||'Connection failed.');err.waitSeconds=data.wait_seconds||0;throw err;}
   return data;
 }

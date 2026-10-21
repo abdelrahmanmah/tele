@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { randomBytes } = require('node:crypto');
 const app = require('../app');
-const { classify, contentHash, matchesFilters } = require('../api/collector');
+const { classify, contentHash, matchesFilters } = require('../lib/collector');
 
 test('EGX classification keeps the notebook conditions', () => {
   assert.deepEqual(classify('توصية شراء سهم فوري'), [['buy_recommendation'], ['FWRY']]);

@@ -7,7 +7,7 @@ const { Api, TelegramClient } = require('teleproto');
 const { StringSession } = require('teleproto/sessions');
 const { Raw } = require('teleproto/events');
 const { computeCheck } = require('teleproto/Password');
-const { classify, contentHash, matchesFilters } = require('./api/collector');
+const { classify, contentHash, matchesFilters } = require('./lib/collector');
 
 const app = express();
 app.disable('x-powered-by');
